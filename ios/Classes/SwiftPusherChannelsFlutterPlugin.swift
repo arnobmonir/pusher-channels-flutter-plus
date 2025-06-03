@@ -214,6 +214,7 @@ public class SwiftPusherChannelsFlutterPlugin: NSObject, FlutterPlugin, PusherDe
       )
     } else {
       let onSubscriptionCount: (Int) -> Void = { subscriptionCount in
+       DispatchQueue.main.async {
         self.methodChannel.invokeMethod(
           "onEvent", arguments: [
             "channelName": channelName,
@@ -224,6 +225,7 @@ public class SwiftPusherChannelsFlutterPlugin: NSObject, FlutterPlugin, PusherDe
             ],
           ]
         )
+      }
       }
       pusher.subscribe(channelName: channelName,
                        onSubscriptionCountChanged: onSubscriptionCount)
